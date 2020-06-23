@@ -72,7 +72,7 @@ spawn(char *cmd, char *const env[])
 }
 
 int
-main(int argc, char *argv[])
+main(void)
 {
 	extern char **environ;
 	int sock, err, status, rcvbuf = 8 * 1024 * 1024;

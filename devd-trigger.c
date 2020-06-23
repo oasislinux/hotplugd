@@ -98,7 +98,7 @@ search(int fd, const char *name)
 }
 
 int
-main(int argc, char *argv[])
+main(void)
 {
 	pathlen = strlen(path);
 	search(AT_FDCWD, path);
