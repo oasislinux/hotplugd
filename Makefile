@@ -9,14 +9,14 @@ LIBEXECDIR?=$(PREFIX)/libexec
 CFLAGS+=-Wall -Wpedantic -D 'PREFIX="$(PREFIX)"'
 
 .PHONY: all
-all: devd devd-trigger
+all: hotplugd hotplugd-trigger
 
 .PHONY: install
-install: devd devd-trigger
+install: hotplugd hotplugd-trigger
 	mkdir -p $(DESTDIR)$(BINDIR) $(DESTDIR)$(LIBEXECDIR)
-	cp devd $(DESTDIR)$(BINDIR)
-	cp devd-trigger $(DESTDIR)$(LIBEXECDIR)
+	cp hotplugd $(DESTDIR)$(BINDIR)
+	cp hotplugd-trigger $(DESTDIR)$(LIBEXECDIR)
 
 .PHONY: clean
 clean:
-	rm -f devd devd-trigger
+	rm -f hotplugd hotplugd-trigger

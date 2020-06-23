@@ -1,11 +1,11 @@
 /*
-devd reads kernel uevents via netlink and for each one spawns the
-/etc/hotplug script with an environment consisting of the uevent
+hotplugd reads kernel uevents via netlink and for each one spawns
+the /etc/hotplug script with an environment consisting of the uevent
 keys and values.
 
-After setting up the netlink socket, devd does a double fork to
-execute an orphaned /libexec/devd-trigger, which walks /sys/devices,
-triggering "add" uevents for each one.
+After setting up the netlink socket, hotplugd does a double fork
+to execute an orphaned /libexec/hotplugd-trigger, which walks
+/sys/devices, triggering "add" uevents for each one.
 */
 #define _POSIX_C_SOURCE 200809L
 #include <errno.h>
@@ -28,7 +28,7 @@ triggering "add" uevents for each one.
 #define PREFIX
 #endif
 #define HOTPLUG PREFIX "/etc/hotplug"
-#define TRIGGER PREFIX "/libexec/devd-trigger"
+#define TRIGGER PREFIX "/libexec/hotplugd-trigger"
 
 #define LEN(a) (sizeof(a) / sizeof((a)[0]))
 
