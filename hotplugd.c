@@ -138,7 +138,7 @@ main(void)
 
 next:
 	for (;;) {
-		ret = recvmsg(sock, &msg, sizeof(buf));
+		ret = recvmsg(sock, &msg, 0);
 		if (ret == 0)
 			break;
 		if (ret == -1)
