@@ -66,9 +66,9 @@ spawn(char *cmd, char *const env[])
 		fprintf(stderr, "wait %jd: %s\n", (intmax_t)pid, strerror(errno));
 		return -1;
 	}
-	if (!WIFEXITED(status) || WEXITSTATUS(status) != 0)
+	if (!WIFEXITED(status))
 		return -1;
-	return 0;
+	return WEXITSTATUS(status);
 }
 
 int
@@ -88,6 +88,15 @@ main(void)
 	};
 	struct msghdr msg = {
 		.msg_iov = &iov,
+		.msg_iovlen = 1,
+	};
+	struct iovec outiov = {
+		.iov_base = buf,
+	};
+	struct msghdr outmsg = {
+		.msg_name = &addr,
+		.msg_namelen = sizeof(addr),
+		.msg_iov = &outiov,
 		.msg_iovlen = 1,
 	};
 	ssize_t ret;
@@ -141,6 +150,8 @@ main(void)
 		return 1;
 
 next:
+	/* set group mask to use for uevent rebroadcast (1 = kernel, 2 = udev) */
+	addr.nl_groups = 4;
 	for (;;) {
 		ret = recvmsg(sock, &msg, 0);
 		if (ret == 0)
@@ -166,6 +177,8 @@ next:
 			env[envlen++] = var;
 		}
 		env[envlen] = NULL;
-		spawn(HOTPLUG, env);
+		outiov.iov_len = ret;
+		if (spawn(HOTPLUG, env) == 0 && sendmsg(sock, &outmsg, 0) == -1)
+			fprintf(stderr, "uevent rebroadcast: %s", strerror(errno));
 	}
 }
