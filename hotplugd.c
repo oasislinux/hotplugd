@@ -82,8 +82,12 @@ main(void)
 	};
 	char buf[8192], *var, *eql, *nul, **envp, *env[256];
 	size_t envlen, envbase;
+	struct iovec iov = {
+		.iov_base = buf,
+		.iov_len = sizeof(buf),
+	};
 	struct msghdr msg = {
-		.msg_iov = (struct iovec[]){{buf, sizeof(buf)}},
+		.msg_iov = &iov,
 		.msg_iovlen = 1,
 	};
 	ssize_t ret;
