@@ -9,13 +9,13 @@ LIBEXECDIR?=$(PREFIX)/libexec
 CFLAGS+=-Wall -Wpedantic -D 'PREFIX="$(PREFIX)"'
 
 .PHONY: all
-all: hotplugd trigger
+all: hotplugd ata_id trigger
 
 .PHONY: install
-install: hotplugd trigger
+install: hotplugd ata_id trigger
 	mkdir -p $(DESTDIR)$(BINDIR) $(DESTDIR)$(LIBEXECDIR)/hotplugd
 	cp hotplugd $(DESTDIR)$(BINDIR)
-	cp trigger $(DESTDIR)$(LIBEXECDIR)/hotplugd
+	cp ata_id trigger $(DESTDIR)$(LIBEXECDIR)/hotplugd
 
 .PHONY: clean
 clean:
