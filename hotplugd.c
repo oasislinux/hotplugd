@@ -28,7 +28,7 @@ to execute an orphaned /libexec/hotplugd-trigger, which walks
 #define PREFIX
 #endif
 #define HOTPLUG PREFIX "/etc/hotplug"
-#define TRIGGER PREFIX "/libexec/hotplugd-trigger"
+#define TRIGGER PREFIX "/libexec/hotplugd/trigger"
 
 #define LEN(a) (sizeof(a) / sizeof((a)[0]))
 
